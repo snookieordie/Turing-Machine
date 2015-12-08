@@ -121,20 +121,6 @@ body {
 
 
 
-.line_scanner {
-	position: absolute;
-	height: 25px;
-	width: 140px;
-	background-color: coral;
-	border-radius: 2px;
-	border: 1px solid steelblue;
-	left: 50%;
-	margin-left: -70px;
-	z-index: -1;
-
-}
-
-
 
 
 
