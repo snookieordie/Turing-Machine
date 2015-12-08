@@ -1,0 +1,153 @@
+
+
+body {
+	background-color: #f0f0f0;
+	font-family: "Quicksand";
+}
+
+.tape {
+	position: relative;
+	width: 50000px;
+	margin: auto;
+	background-color: #A0A0A0 ;
+	overflow-x: scroll;
+	border-bottom: 2px solid black;
+	border-top: 2px solid black;
+	margin-bottom: 5px;
+
+}
+
+.cell {  
+	position: relative; 
+	display: inline-block;
+	height: 46px;
+	width: 48px;
+	background-color: #83A136;
+	border: 2px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	font-size: 8px;
+	
+}
+
+.cell span {
+	position: absolute;
+	font-size: 38px;
+	font-weight: 800;
+	top: 0px;
+	left: 12px;
+
+	
+}
+
+.reader {
+	position: relative;
+	height: 17px;
+	width: 20px;
+	border: 1px solid steelblue;
+	border-radius: 100%;
+	left: 25514px;
+	text-align: center;
+	font-size: 10px;
+	padding-top: 3px;
+	background-color: coral;
+	cursor: pointer;
+}
+
+.center_button {
+	height: 25px;
+	width: 46%;
+	border: 2px solid black;
+	border-radius: 3px;
+	text-align: center;
+	background-color: #A0A0A0 ;
+	padding-top: 7px;
+	cursor: pointer;
+	display: inline-block;
+
+
+}
+
+.input{
+	width: 20px;
+	
+
+}
+
+.lines {
+	position: relative;
+	height: 280px;
+	width:200px;
+	border: 2px solid black;
+	border-radius: 3px;
+	background-color: #A0A0A0 ;
+	z-index: -2;
+	overflow: scroll;
+	padding-top: 5px;
+	
+
+}
+
+
+
+.line_row {
+	height: 25px;
+	width:100%;
+	text-align: center;
+}
+
+.delete_line_button {
+	display: none;
+	position: relative;
+	border: 1px solid grey;
+	color: grey;
+	border-radius: 3px;
+	height: 20px;
+	width: 20px;
+	text-align: center;
+	left: 174px;
+	top: -21px;
+	cursor: pointer;
+
+}
+
+.delete_line_button:hover {
+	border: 2px solid steelblue;
+	color: steelblue;
+	left: 173px;
+	top: -22px;
+
+}
+
+
+
+.line_scanner {
+	position: absolute;
+	height: 25px;
+	width: 140px;
+	background-color: coral;
+	border-radius: 2px;
+	border: 1px solid steelblue;
+	left: 50%;
+	margin-left: -70px;
+	z-index: -1;
+
+}
+
+
+
+
+
+.fixed {
+	position: fixed;
+}
+
+
+
+.error_message {
+	color: red;
+	font-size: 12px;
+}
+
+
+
