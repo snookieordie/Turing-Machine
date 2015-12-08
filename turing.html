@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title> turing machine </title>
+
+	<link type="text/css" rel="stylesheet" href="turing.css" />
+
+	<link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular.min.js"></script>
+
+	<script src="turingController.js"></script>
+
+	
+
+</head>
+
+
+
+
+
+
+<body ng-app="turingApp"; ng-controller="turingController">
+
+
+
+
+	<div class="tape">
+
+		<div class="cell" ng-repeat="x in cell">
+			{{x.index}}
+			<br/>
+			<span>{{x.content}}</span>
+		</div>
+
+		<div class="reader" ng-click="run_program(0)">
+			{{reader.state}}
+		</div>
+
+	</div>
+
+  <div class="fixed">  <!--how can i shift everything up so this isn't as far in?-->
+
+
+
+
+	<div class="center_button" ng-click="scroll()">
+		RETURN
+	</div>
+
+	<div class="center_button" ng-click="reset_tape()">
+		RESET
+	</div>
+
+	<br/><br/>
+
+
+	Speed:
+
+	 s<input class="speed_option" name="speed_option" type="radio" checked ng-click="change_speed_slow()" />
+
+	 f<input class="speed_option" name="speed_option" type="radio" ng-click="change_speed_fast()"/>
+
+
+
+	<br/><br/>
+
+	<input class=" input input_value"/>
+	<input class="input_value_submit" value="Submit Input" type="button" ng-click="input_v_submit()"/>
+
+
+	<p> Input: {{submitted_input}} </p>
+	<p> Output: {{output_total}} </p>
+
+	<input class="input line1"/>,
+	<input class="input line2"/>,
+	<input class="input line3" />,
+	<input class="input line4"/>,
+	<input class="input line5"/>
+
+	<input class="code_submit" value="Submit Line" type="button" ng-click="add_line()"/>
+
+	<br/><span class="error_message">{{error_message}}</span><br/>
+
+
+	
+
+	
+	<div class="lines">
+		
+	   <!-- <div class="line_scanner"></div> -->
+
+			<div class="line_row" ng-repeat="x in program" ng-mouseenter="show_delete_button($event)" ng-mouseleave="hide_delete_button($event)">
+				{{x.current_state}}, {{x.current_scanning}}, {{x.print}}, {{x.move}}, {{x.next_state}}
+				<div class="delete_line_button" ng-click="delete_line($index)">D</div>
+			</div>
+			
+		
+	</div>
+
+
+
+
+  </div> <!--goes with the big class=fixed div-->
+	
+
+
+
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
