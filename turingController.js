@@ -404,25 +404,11 @@ app.controller("turingController", ["$scope", function($scope) {
 
 
 
-		//actual turing program, runs through the turing lines
 
-//		if (j === 0) {
-//
-//			$(".line_scanner").animate({"top":"0px"}, 200)
-//
-//			$(".line_scanner").css("background-color","coral")
-//
-//		}
 
 		if (j<$scope.program.length) {
 
 			if ($scope.reader.state === current_state[j] && $scope.reader.scanning === current_scanning[j]) { //if there is a match in the program
-
-//				$(".line_scanner").css("background-color","red")
-//
-//				$(".line_scanner").animate({"width":"+=30px", "left":"-=15px"}, 200)
-//
-//				$(".line_scanner").animate({"width":"-=30px", "left":"+=15px"}, 200)
 
 				$scope.cell[$scope.reader.location].content = print[j]; //change the cell to have new content
 
@@ -432,13 +418,11 @@ app.controller("turingController", ["$scope", function($scope) {
 
 			else {
 
-//				$(".line_scanner").animate({"top":"+=25px"}, 500, function() {
-//
-					j++;
 
-					$scope.run_program(j);
-//
-//				})
+				j++;
+
+				$scope.run_program(j);
+				
 
 			}
 
