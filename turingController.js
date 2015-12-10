@@ -141,79 +141,56 @@ app.controller("turingController", ["$scope", function($scope) {
 
 
 
+
+
 	//enter in program line objects into the program array when button is clicked
 
 
 	$scope.program = [];
 
+	$scope.temp_line_array = [];
 
-	$scope.add_line = function() {
+    $scope.current_state_options = ["q1"]
 
-		//temportary error messages
+    $scope.next_state_options = ["q1", "q2"]
 
-		$scope.error_message = ""
 
-		if ($(".line1").val() == "" || $(".line2").val() == "" || $(".line3").val() == "" || $(".line4").val() == "" || $(".line5").val() == "") {
 
-			$scope.error_message = "A field is blank!"
 
-			return;
-			
-		}	
 
-		if ($(".line2").val() != "0" && $(".line2").val() != "1" && $(".line2").val().toUpperCase() != "B") {
+//adding to temporary array
 
-			$scope.error_message = "A cell can only contain a 1, 0, or B!"
 
-			return;
+	$scope.add_state_to_temporary_array = function($index) {
 
-		}
+    	$scope.temp_line_array[0] = "q"+ ($index+1);
 
-		if ($(".line3").val() != "0" && $(".line3").val() != "1" && $(".line3").val().toUpperCase() != "B") {
+	}
 
-			$scope.error_message = "A cell can only contain a 1, 0, or B!"
+	$scope.add_to_temporary_array = function() {
 
-			return;
-			
-		}
-
-		if ($(".line4").val().toUpperCase() != "R" && $(".line4").val().toUpperCase() != "L" && $(".line4").val().toUpperCase() != "N") {
-
-			$scope.error_message = "The reader can only move R, L, or N!"
-
-			return;
-			
-		}
-
-		
-
-		//first, deal with the scaninning and print
-
-		if ($(".line2").val().toUpperCase() === "B") {
-			var current_scanning_variable = "B";
+		if($scope.scanning_variable == "0" || $scope.scanning_variable == "1") {
+			$scope.temp_line_array[1] = parseInt($scope.scanning_variable)
 		}
 		else {
-			current_scanning_variable = parseInt($(".line2").val());
+			$scope.temp_line_array[1] = $scope.scanning_variable
 		}
 
-		if ($(".line3").val().toUpperCase() === "B") {
-			var print_variable = "B";
+		if($scope.print_variable == "0" || $scope.print_variable == "1") {
+			$scope.temp_line_array[2] = parseInt($scope.print_variable)
 		}
 		else {
-			print_variable = parseInt($(".line3").val());
+			$scope.temp_line_array[2] = $scope.print_variable
 		}
 
-		//add the code line to the program array
+		$scope.temp_line_array[3] = $scope.move_variable
 
-		$scope.program.push({
+	}
 
-			current_state: $(".line1").val().toLowerCase(),
-			current_scanning: current_scanning_variable,
-			print: print_variable,
-			move: $(".line4").val().toUpperCase(),
-			next_state: $(".line5").val().toLowerCase()
 
-		})
+	$scope.add_next_state_to_temporary_array = function($index) {
+
+    	$scope.temp_line_array[4] = "q"+ ($index+1);
 
 	}
 
@@ -221,7 +198,44 @@ app.controller("turingController", ["$scope", function($scope) {
 
 
 
-	//delete line from line list
+	$scope.commit_line = function() {
+
+//add the code line to the program array
+
+		$scope.program.push({
+
+			current_state: $scope.temp_line_array[0],
+			current_scanning: $scope.temp_line_array[1],
+			print: $scope.temp_line_array[2],
+			move: $scope.temp_line_array[3],
+			next_state: $scope.temp_line_array[4]
+
+		})
+
+
+// add to state options if appropriate
+
+        for (u = 0; u < $scope.program.length; u++) {
+
+            if ($scope.current_state_options.indexOf($scope.program[u].next_state) == -1) {
+
+		        $scope.current_state_options.push($scope.program[u].next_state)
+
+		        $scope.next_state_options.push("q"+($scope.next_state_options.length+1))
+
+	        }
+
+        }
+
+    }
+
+//
+
+
+
+
+
+//delete line from line list
 
 	$scope.show_delete_button = function(e) {
 
@@ -238,6 +252,69 @@ app.controller("turingController", ["$scope", function($scope) {
 
 	$scope.delete_line = function(x) {
 
+
+
+
+//delete from possible states if its no longer possible
+
+        var del_state_num = $scope.program[x].next_state.replace("q","") 
+
+        var max_state_tracker_array = []
+
+        for (var k = 0; k < $scope.program.length; k++) {
+			max_state_tracker_array.push(parseInt($scope.program[k].next_state.replace("q","")))
+			var max_state = Math.max.apply(null, max_state_tracker_array)
+		}
+
+		var index = max_state_tracker_array.indexOf(del_state_num)
+
+		max_state_tracker_array.splice(index,1)
+
+
+		if (max_state_tracker_array.length > 0) {
+
+			var diff_between_del_state_and_next_max = del_state_num - Math.max.apply(null, max_state_tracker_array)
+
+			if (del_state_num == max_state) {
+
+        		for (diff = 0; diff < diff_between_del_state_and_next_max; diff++) {
+
+        			$scope.current_state_options.pop()
+
+		    		$scope.next_state_options.pop()
+
+		    	}
+
+        	}
+
+        }
+
+        else {
+
+        	$scope.current_state_options = ["q1"]
+
+        	$scope.next_state_options = ["q1","q2"]
+
+        }
+
+    //delete state from staging area if it is no longer an option
+
+        if ($scope.next_state_options.indexOf($scope.temp_line_array[4]) == -1) {
+
+        	$scope.temp_line_array[4] = null
+
+        }
+
+         if ($scope.current_state_options.indexOf($scope.temp_line_array[0]) == -1) {
+
+        	$scope.temp_line_array[0] = null
+
+        }
+
+//
+
+
+
 		delete $scope.program[x];
 
 		for (var i=x; i < $scope.program.length - 1; i++) {
@@ -247,6 +324,8 @@ app.controller("turingController", ["$scope", function($scope) {
 		}
 
 		$scope.program.pop()
+
+
 
 	}
 
@@ -295,10 +374,9 @@ app.controller("turingController", ["$scope", function($scope) {
 
 
 
-
-
-
 	$scope.run_program = function(j) {
+
+	debugger;
 
 		$scope.machine_on = true
 
@@ -453,7 +531,8 @@ app.controller("turingController", ["$scope", function($scope) {
 
 
 
-/////test space
+/////TEMPORARY SPACE
+
 
 
 
