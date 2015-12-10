@@ -4,6 +4,7 @@ app.controller("turingController", ["$scope", function($scope) {
 
 	//automatic scrolling
 	
+
 	$scope.scroll = function() { 
 		$("body, html").animate({scrollLeft: $(".reader").offset().left - $(window).width() * (.3)}, 1000)
 
@@ -299,6 +300,8 @@ app.controller("turingController", ["$scope", function($scope) {
 
 	$scope.run_program = function(j) {
 
+		$scope.machine_on = true
+
 		$("html").css("overflow","hidden")
 
 		//declare variables for program line components, for ease of reading
@@ -308,6 +311,8 @@ app.controller("turingController", ["$scope", function($scope) {
 		var print = [];
 		var move = [];
 		var next_state = [];
+
+	
 
 		for (var t = 0; t < $scope.program.length; t++) {
 
@@ -403,7 +408,7 @@ app.controller("turingController", ["$scope", function($scope) {
 
 
 
-
+		//actual turing program, runs through the turing lines
 
 		if (j<$scope.program.length) {
 
@@ -417,11 +422,9 @@ app.controller("turingController", ["$scope", function($scope) {
 
 			else {
 
-
 				j++;
 
 				$scope.run_program(j);
-				
 
 			}
 
@@ -432,6 +435,8 @@ app.controller("turingController", ["$scope", function($scope) {
 			$scope.output();
 
 			$("html").css("overflow","auto")
+
+			$scope.machine_on = false
 
 			return;
 
