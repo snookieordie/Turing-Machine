@@ -25,7 +25,7 @@
 
 
 
-<body ng-app="turingApp"; ng-controller="turingController">
+<body ng-app="turingApp" ng-controller="turingController">
 
 
 
@@ -92,12 +92,18 @@
 
 	
 	<div class="lines">
-	
+		
+	   <!-- <div class="line_scanner"></div> -->
 
-		<div class="line_row" ng-repeat="x in program" ng-mouseenter="show_delete_button($event)" ng-mouseleave="hide_delete_button($event)">
-			{{x.current_state}}, {{x.current_scanning}}, {{x.print}}, {{x.move}}, {{x.next_state}}
-			<div class="delete_line_button" ng-click="delete_line($index)">D</div>
-		</div>
+			<div class="line_row" ng-repeat="x in program" ng-class="{line_in_use: x.current_state == reader.state && x.current_scanning == reader.scanning && machine_on}" ng-mouseenter="show_delete_button($event)" ng-mouseleave="hide_delete_button($event)">
+
+				<div class= "line_in_use_indicator" ng-show="x.current_state == reader.state && x.current_scanning == reader.scanning && machine_on"></div>
+
+				{{x.current_state}}, {{x.current_scanning}}, {{x.print}}, {{x.move}}, {{x.next_state}}
+
+				<div class="delete_line_button" ng-click="delete_line($index)">D</div>
+				
+			</div>
 			
 		
 	</div>
