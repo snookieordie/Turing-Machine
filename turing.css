@@ -89,8 +89,8 @@ body {
 }
 
 
-
 .line_row {
+	position: relative;
 	height: 25px;
 	width:100%;
 	text-align: center;
@@ -121,6 +121,20 @@ body {
 
 
 
+.line_scanner {
+	position: absolute;
+	height: 25px;
+	width: 140px;
+	background-color: coral;
+	border-radius: 2px;
+	border: 1px solid steelblue;
+	left: 50%;
+	margin-left: -70px;
+	z-index: -1;
+
+}
+
+
 
 
 
@@ -133,6 +147,21 @@ body {
 .error_message {
 	color: red;
 	font-size: 12px;
+}
+
+.line_in_use {
+	color: steelblue;
+}
+
+.line_in_use_indicator {
+	position: absolute;
+	top: 6px;
+	left: 25px;
+	height: 10px;
+	width:10px;
+	background-color: #83A136;
+	border: 1px solid steelblue;
+	border-radius: 100%;
 }
 
 
