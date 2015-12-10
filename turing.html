@@ -44,7 +44,9 @@
 
 	</div>
 
-  <div class="fixed">  <!--how can i shift everything up so this isn't as far in?-->
+
+
+<div class="fixed2temporary">   <!-- How can I change all indents at once -->
 
 
 
@@ -70,20 +72,14 @@
 
 	<br/><br/>
 
-	<input class=" input input_value"/>
+	<input class="input input_value"/>
 	<input class="input_value_submit" value="Submit Input" type="button" ng-click="input_v_submit()"/>
 
 
 	<p> Input: {{submitted_input}} </p>
 	<p> Output: {{output_total}} </p>
 
-	<input class="input line1"/>,
-	<input class="input line2"/>,
-	<input class="input line3" />,
-	<input class="input line4"/>,
-	<input class="input line5"/>
-
-	<input class="code_submit" value="Submit Line" type="button" ng-click="add_line()"/>
+	<input class="code_submit" value="Submit Line" type="button" ng-click="commit_line()"/>
 
 	<br/><span class="error_message">{{error_message}}</span><br/>
 
@@ -92,18 +88,22 @@
 
 	
 	<div class="lines">
-		
-	   <!-- <div class="line_scanner"></div> -->
 
-			<div class="line_row" ng-repeat="x in program" ng-class="{line_in_use: x.current_state == reader.state && x.current_scanning == reader.scanning && machine_on}" ng-mouseenter="show_delete_button($event)" ng-mouseleave="hide_delete_button($event)">
+		<div  class="staging_area">
 
-				<div class= "line_in_use_indicator" ng-show="x.current_state == reader.state && x.current_scanning == reader.scanning && machine_on"></div>
+		{{temp_line_array[0]}} {{temp_line_array[1]}} {{temp_line_array[2]}} {{temp_line_array[3]}} {{temp_line_array[4]}}
 
-				{{x.current_state}}, {{x.current_scanning}}, {{x.print}}, {{x.move}}, {{x.next_state}}
+		</div>
 
-				<div class="delete_line_button" ng-click="delete_line($index)">D</div>
+		<div class="line_row" ng-repeat="x in program" ng-class="{line_in_use: x.current_state == reader.state && x.current_scanning == reader.scanning && machine_on}" ng-mouseenter="show_delete_button($event)" ng-mouseleave="hide_delete_button($event)">
+
+			<div class= "line_in_use_indicator" ng-show="x.current_state == reader.state && x.current_scanning == reader.scanning && machine_on"></div>
+
+			{{x.current_state}}, {{x.current_scanning}}, {{x.print}}, {{x.move}}, {{x.next_state}}
+
+			<div class="delete_line_button" ng-click="delete_line($index)">D</div>
 				
-			</div>
+		</div>
 			
 		
 	</div>
@@ -111,7 +111,74 @@
 
 
 
-  </div> <!--goes with the big class=fixed div-->
+
+
+
+	<div class="line1_line2_menu">
+
+
+		{{current_state_options}}
+
+	
+
+		<div class="state_color_buttons_box" ng-repeat="x in current_state_options" ng-class="{selected_state_color_buttons_box: temp_line_array[0] == 'q'+($index+1)}">
+			<div class="state_color_buttons" ng-click="add_state_to_temporary_array($index)"></div>
+		</div>
+
+		<div class="scanning_buttons_box">
+			1<input type="radio" name="scanning_button_option" value=1 ng-model="scanning_variable" ng-click="add_to_temporary_array()">
+			0<input type="radio" name="scanning_button_option" value=0 ng-model="scanning_variable" ng-click="add_to_temporary_array()">
+			B<input type="radio" name="scanning_button_option" value="B" ng-model="scanning_variable" ng-click="add_to_temporary_array()">
+		</div>
+
+	</div>
+
+
+
+
+
+
+	<div class="line5_menu">
+
+	
+
+		{{next_state_options}}
+
+
+		<div class="print_buttons_box">
+			1<input type="radio" name="print_button_option" value=1 ng-model="print_variable" ng-click="add_to_temporary_array()">
+			0<input type="radio" name="print_button_option" value=0 ng-model="print_variable" ng-click="add_to_temporary_array()">
+			B<input type="radio" name="print_button_option" value="B" ng-model="print_variable" ng-click="add_to_temporary_array()">
+		</div>
+
+
+		<div class="move_buttons_box">
+			R<input type="radio" name="move_button_option" value="R" ng-model="move_variable" ng-click="add_to_temporary_array()">
+			L<input type="radio" name="move_button_option" value="L" ng-model="move_variable" ng-click="add_to_temporary_array()">
+			N<input type="radio" name="move_button_option" value="N" ng-model="move_variable" ng-click="add_to_temporary_array()">
+		</div>
+
+
+
+		<div class="state_color_buttons_box" ng-repeat="x in next_state_options" ng-class="{selected_state_color_buttons_box: temp_line_array[4] == 'q'+($index+1)}">
+			<div class="state_color_buttons" ng-click="add_next_state_to_temporary_array($index)"></div>
+		</div>
+
+
+
+	</div>
+
+
+
+
+  </div> <!-- fixed2temporary -->
+
+
+
+
+
+
+
 	
 
 
