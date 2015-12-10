@@ -4,7 +4,6 @@ app.controller("turingController", ["$scope", function($scope) {
 
 	//automatic scrolling
 	
-
 	$scope.scroll = function() { 
 		$("body, html").animate({scrollLeft: $(".reader").offset().left - $(window).width() * (.3)}, 1000)
 
