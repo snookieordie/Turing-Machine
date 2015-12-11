@@ -568,6 +568,5 @@ app.controller("turingController", ["$scope", function($scope) {
 
 
 
-
 }]); //close controller
 
