@@ -1,177 +1,324 @@
-<!DOCTYPE html>
 
-<html>
 
-<head>
+body {
+	background-color: #f0f0f0;
+	font-family: "Quicksand";
+}
 
-	<title> turing machine </title>
+.tape {
+	position: relative;
+	width: 50000px;
+	margin: auto;
+	background-color: #A0A0A0 ;
+	overflow-x: scroll;
+	border-bottom: 2px solid black;
+	border-top: 2px solid black;
+	margin-bottom: 5px;
 
-	<link type="text/css" rel="stylesheet" href="turing.css" />
+}
 
-	<link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+.cell {  
+	position: relative; 
+	display: inline-block;
+	height: 46px;
+	width: 48px;
+	background-color: #83A136;
+	border: 2px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	font-size: 8px;
+	
+}
 
-	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular.min.js"></script>
-
-	<script src="turingController.js"></script>
+.cell span {
+	position: absolute;
+	font-size: 38px;
+	font-weight: 800;
+	top: 0px;
+	left: 12px;
 
 	
+}
 
-</head>
-
-
-
-
-
-
-<body ng-app="turingApp" ng-controller="turingController">
-
-
-
-
-	<div class="tape">
-
-		<div class="cell" ng-repeat="x in cell">
-			{{x.index}}
-			<br/>
-			<span>{{x.content}}</span>
-		</div>
-
-		<div class="reader" ng-click="run_program(0)">
-			{{reader.state}}
-		</div>
-
-	</div>
+.reader {
+	position: relative;
+	height: 16px;
+	width: 20px;
+	border: 1px solid steelblue;
+	border-radius: 100%;
+	left: 25514px;
+	text-align: center;
+	font-size: 10px;
+	padding-top: 4px;
+	background-color: coral;
+	cursor: pointer;
+}
 
 
-
-<div class="fixed2temporary">   <!-- How can I change all indents at once -->
-
-
-
-
-	<div class="center_button" ng-click="scroll()">
-		RETURN
-	</div>
-
-	<div class="center_button" ng-click="reset_tape()">
-		RESET
-	</div>
-
-	<br/><br/>
+.fixed {
+	position: fixed;
+	left: 170px;
+}
 
 
-	Speed:
-
-	 s<input class="speed_option" name="speed_option" type="radio" checked ng-click="change_speed_slow()" />
-
-	 f<input class="speed_option" name="speed_option" type="radio" ng-click="change_speed_fast()"/>
-
-
-
-	<br/><br/>
-
-	<input class="input input_value"/>
-	<input class="input_value_submit" value="Submit Input" type="button" ng-click="input_v_submit()"/>
+.center_button {
+	height: 25px;
+	width: 46%;
+	border: 2px solid black;
+	border-radius: 3px;
+	text-align: center;
+	background-color: #A0A0A0 ;
+	padding-top: 7px;
+	cursor: pointer;
+	display: inline-block;
 
 
-	<p> Input: {{submitted_input}} </p>
-	<p> Output: {{output_total}} </p>
+}
 
-	<input class="code_submit" value="Submit Line" type="button" ng-click="commit_line()"/>
-
-	<br/><span class="error_message">{{error_message}}</span><br/>
-
-
+.input{
+	width: 20px;
 	
 
+}
+
+.lines {
+	position: relative;
+	height: 280px;
+	width:200px;
+	border: 2px solid black;
+	border-radius: 3px;
+	background-color: #A0A0A0 ;
+	z-index: -2;
+	overflow: scroll;
+}
+
+
+
+.staging_area {
+	position: relative;
+	width: 100%;
+	height: 50px;
+	background-color: grey;
+	margin-bottom: 5px;
+}
+
+
+.staging_area_container{
+	position: relative;
+	display: inline-block;
+	width: 38px;
+	height: 36px;
+	margin: 4px -2px 0px 0px;
+	vertical-align: top;
+	text-align: center;
+	font-size: 30px;
+	padding-top: 2px;
+
+}
+
+
+
+.temp_array_state_color {
+	position: relative;
+	top: 1px;
+	left: 3px;
+	font-size: 15px;
+	padding-top: 6px;
+	height: 24px;
+	width: 30px;
+	background-color: blue;
+	border: 1px solid black;
+	border-radius: 100%;
+}
+
+
+
+
+
+.submit_line_button{
+	position: relative;
+	top: 1px;
+	left: 3px;
+	height: 30px;
+	width: 30px;
+	border: 1px solid #A0A0A0;
+	border-radius: 3px;
+	color: #A0A0A0;
+	cursor: pointer;
+
+}
+
+.submit_line_button:hover{
+	border: 2px solid steelblue;
+	color: steelblue;
+	top: 0px;
+	left: 2px;
+
+}
+
+.plus {
+	position: relative;
+	font-size: 40px;
+	font-weight: thin;
+	top: -49px;
 	
-	<div class="lines">
+}
 
-		<div  class="staging_area">
 
-		{{temp_line_array[0]}} {{temp_line_array[1]}} {{temp_line_array[2]}} {{temp_line_array[3]}} {{temp_line_array[4]}}
 
-		</div>
+.line_row {
+	position: relative;
+	height: 24px;
+	width:100%;
+	text-align: center;
+	padding-top: 1px;
+}
 
-		<div class="line_row" ng-repeat="x in program" ng-class="{line_in_use: x.current_state == reader.state && x.current_scanning == reader.scanning && machine_on}" ng-mouseenter="show_delete_button($event)" ng-mouseleave="hide_delete_button($event)">
 
-			<div class= "line_in_use_indicator" ng-show="x.current_state == reader.state && x.current_scanning == reader.scanning && machine_on"></div>
 
-			{{x.current_state}}, {{x.current_scanning}}, {{x.print}}, {{x.move}}, {{x.next_state}}
+.line_row_container {
+	display: inline-block;
+	vertical-align: top;
+	height: 100%;
+	width: 20px;
 
-			<div class="delete_line_button" ng-click="delete_line($index)">D</div>
-				
-		</div>
-			
-		
-	</div>
 
 
+}
 
 
+.line_row_state_color {
+	height: 15px;
+	width: 20px;
+	background-color: blue;
+	border: 1px solid black;
+	border-radius: 100%;
+	font-size: 10px;
+	padding-top: 5px;
 
+}
 
 
-	<div class="line1_line2_menu">
 
+.delete_line_button {
+	display: none;
+	position: relative;
+	border: 1px solid grey;
+	color: grey;
+	border-radius: 3px;
+	height: 20px;
+	width: 20px;
+	text-align: center;
+	left: 174px;
+	top: -26px;
+	cursor: pointer;
 
-		{{current_state_options}}
+}
 
-	
+.delete_line_button:hover {
+	border: 2px solid steelblue;
+	color: steelblue;
+	left: 173px;
+	top: -27px;
 
-		<div class="state_color_buttons_box" ng-repeat="x in current_state_options" ng-class="{selected_state_color_buttons_box: temp_line_array[0] == 'q'+($index+1)}">
-			<div class="state_color_buttons" ng-click="add_state_to_temporary_array($index)"></div>
-		</div>
+}
 
-		<div class="scanning_buttons_box">
-			1<input type="radio" name="scanning_button_option" value=1 ng-model="scanning_variable" ng-click="add_to_temporary_array()">
-			0<input type="radio" name="scanning_button_option" value=0 ng-model="scanning_variable" ng-click="add_to_temporary_array()">
-			B<input type="radio" name="scanning_button_option" value="B" ng-model="scanning_variable" ng-click="add_to_temporary_array()">
-		</div>
 
-	</div>
+.line_in_use {
+	color: steelblue;
+}
 
+.line_in_use_indicator {
+	position: absolute;
+	top: 6px;
+	left: 25px;
+	height: 10px;
+	width:10px;
+	background-color: #83A136;
+	border: 1px solid steelblue;
+	border-radius: 100%;
+}
 
 
 
 
 
-	<div class="line5_menu">
 
-	
+.line1_line2_menu {
+	width: 144px;
+	position: absolute;
+	border: 1px solid black;
+	background-color: white;
+	top: 238px;
+	left: -160px;
+	border-radius: 3px;
+}
 
-		{{next_state_options}}
 
+.state_color_buttons {
+	position: relative;
+	top: 8px;
+	left: 8px;
+	height: 30px;
+	width: 30px;
+	background-color: blue;
+	border: 1px solid black;
+	border-radius: 100%;
 
-		<div class="print_buttons_box">
-			1<input type="radio" name="print_button_option" value=1 ng-model="print_variable" ng-click="add_to_temporary_array()">
-			0<input type="radio" name="print_button_option" value=0 ng-model="print_variable" ng-click="add_to_temporary_array()">
-			B<input type="radio" name="print_button_option" value="B" ng-model="print_variable" ng-click="add_to_temporary_array()">
-		</div>
+}
 
 
-		<div class="move_buttons_box">
-			R<input type="radio" name="move_button_option" value="R" ng-model="move_variable" ng-click="add_to_temporary_array()">
-			L<input type="radio" name="move_button_option" value="L" ng-model="move_variable" ng-click="add_to_temporary_array()">
-			N<input type="radio" name="move_button_option" value="N" ng-model="move_variable" ng-click="add_to_temporary_array()">
-		</div>
+.state_color_buttons_box {
+	position: relative;
+	display: inline-block;
+	height: 48px;
+	width: 48px;
+	margin-bottom: -4px;
+	border-radius: 3px;
 
+}
 
 
-		<div class="state_color_buttons_box" ng-repeat="x in next_state_options" ng-class="{selected_state_color_buttons_box: temp_line_array[4] == 'q'+($index+1)}">
-			<div class="state_color_buttons" ng-click="add_next_state_to_temporary_array($index)"></div>
-		</div>
+.selected_state_color_buttons_box {
+	background-color: lightgrey
+}
 
 
+.scanning_buttons_box {
+	border-top: 1px solid lightgrey;
+	margin: auto;
+	margin-top: 10px;
+	padding: 2px 0px 2px 14px;
+	width: 70%;
 
-	</div>
+}
 
 
+.line5_menu {
+	width: 144px;
+	position: absolute;
+	border: 1px solid black;
+	background-color: white;
+	top: 238px;
+	left: 220px;
+	border-radius: 3px;
+}
 
+.print_buttons_box {
+	border-bottom: 1px solid lightgrey;
+	margin: auto;
+	margin-top: 10px;
+	padding: 2px 0px 2px 14px;
+	width: 70
+}
 
-  </div> <!-- fixed2temporary -->
+.move_buttons_box {
+	border-bottom: 1px solid lightgrey;
+	margin: auto;
+	margin-top: 10px;
+	padding: 2px 0px 2px 14px;
+	width: 70%;
+}
 
 
 
@@ -179,7 +326,6 @@
 
 
 
-	
 
 
 
@@ -187,17 +333,56 @@
 
 
 
-</body>
 
 
+.q1 {
+	background-color: coral;
+	border: 1px solid steelblue;
+}
 
+.q2 {
+	background-color: #744B8E;
+	border: 1px solid #0f5738;
+}
 
+.q3 {
+	background-color: #246d5e;
+	border: 1px solid #221858;
+}
 
+.q4 {
+	background-color: #48698A;
+	border: 1px solid #803915;
+}
 
+.q5 {
+	background-color: #647A14;
+	border: 1px solid #1F043A;
+}
 
+.q6 {
+	background-color: #801815;
+	border: 1px solid #805e15;
+}
 
+.q7 {
+	background-color: #4c9c32;
+	border: 1px solid #6a2a79;
+}
 
+.q8 {
+	background-color: #22877d;
+	border: 1px solid #758c39;
+}
 
+.q9 {
+	background-color: #fbd72e;
+	border: 1px solid #fb872e;
+}
 
+.q10 {
+	background-color: #9e567b;
+	border: 1px solid #a60800;
+}
 
-</html>
+
