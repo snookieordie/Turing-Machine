@@ -1,4 +1,3 @@
 # Turing-Machine
 
-This is my Turing Machine. I am confused.
-
+This is my Turing Machine.
